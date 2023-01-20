@@ -14,7 +14,7 @@
     //         return false;    
     //     }    
     //     include_once $fileName;
-    // }
+    // }    
 
     // spl_autoload_register('autoLoadAppToGroupPage');
 
@@ -25,39 +25,36 @@
     echo '<h3>' . $currentGroup . '</h3>';
 
 ?>
-    <div class="pageBlock">
-        <form action="group.php" method="post">  
-            <table class="postsTable">
-                <tbody>                                                                                                                                                              
-                    <?php  
-                        foreach (Context::$posts as $groupPost){
-                            if ($groupPost->groupName == $currentGroup){
-                                ?>
-                                <form class="groupPageBlock" method="get">                                                            
+<div class="pageBlock">                                                                                                                                                          
+    <?php  
+        foreach (Context::$posts as $groupPost){
+            if ($groupPost->groupName == $currentGroup){
+                ?>                                          
+                <table class="postsTable">
+                    <tbody>                                                         
+                        <tr>
+                            <td colspan="2"><h3><?php echo $groupPost->content ?></h3></td>
+                        </tr>
+                        <?php
+                            foreach(Context::$comments as $postComment){
+                                if($postComment->postId == $groupPost->postId){
+                                    ?>
                                     <tr>
-                                        <td colspan="2"><h1><?php echo $groupPost->content ?></h1></td>
-                                    </tr>
+                                        <td><p><?php echo $postComment->creator . ": " ?></p></td>
+                                        <td><p><?php echo $postComment->content  ?></p></td>
+                                    </tr>                                            
                                     <?php
-                                        foreach(Context::$comments as $postComment){
-                                            if($postComment->postId == $groupPost->postId){
-                                                ?>
-                                                <tr>
-                                                    <td><p><?php echo $postComment->creator . ": " ?></p></td>
-                                                    <td><p><?php echo $postComment->content  ?></p></td>
-                                                </tr>                                            
-                                                <?php
-                                            }
-                                        }
-                                    ?>                                                                                        
-                                </form>                                                                                
-                                <?php    
-                            }
-                        }                                                                                                         
-                    ?>                    
-                </tbody>
-            </table>         
-        </form>
-    </div>                                     
+                                }
+                            }                                    
+                        ?>       
+                    </tbody>
+                </table>                                                                                                                                                                                                       
+                <?php    
+            }
+        }                                                                                                         
+    ?>                                  
+</div>  
+
 <?php
 	
 	include_once('partials/footer.php');	
